@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenHands Agent Guide - 環境建置指南</title>
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --text-light: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #0b1120;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
+    header { background-color: #0b1120; padding: 1.5rem 2rem; border-bottom: 1px solid #1e293b; }
+    nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .logo { font-size: 1.25rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+    .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+    .nav-links a { color: var(--text-light); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary-color); }
+    main { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
+    h1 { font-size: 2.25rem; margin-bottom: 1.5rem; color: #ffffff; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--primary-color); border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; color: var(--text-muted); }
+    pre { background-color: var(--code-bg); padding: 1rem; border-radius: 6px; overflow-x: auto; font-family: monospace; border: 1px solid #334155; margin-bottom: 1.5rem; color: #38bdf8; }
+    footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #1e293b; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🤖 OpenHands Agent Guide</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="guide.html" class="active">環境建置</a></li>
+        <li><a href="architecture.html">架構解析</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>🚀 OpenHands 環境建置指南</h1>
+    <p>本頁面詳細記錄建置 OpenHands 執行環境的標準步驟。</p>
+
+    <h2>Step 1: 複製倉庫與準備環境</h2>
+    <p>在本地終端機執行複製指令：</p>
+    <pre>git clone https://github.com/All-Hands-AI/OpenHands.git
+cd OpenHands</pre>
+
+    <h2>Step 2: 啟動 Docker 容器</h2>
+    <p>使用 Docker 執行 OpenHands 映像檔：</p>
+    <pre>docker run -it --rm \
+    -e WORKSPACE_BASE=$PWD/workspace \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -p 3000:3000 \
+    docker.all-hands.dev/all-hands-ai/openhands:0.14</pre>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 OpenHands Agent Guide | Open Source Documentation</p>
+  </footer>
+</body>
+</html>
