@@ -1,175 +1,75 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenHands Agent Guide - 專案首頁</title>
+  <title>OpenHands Agent Guide - 學習指南與 LLM Wiki</title>
   <style>
-    :root {
-      --primary-color: #0066cc;
-      --bg-dark: #0f172a;
-      --card-bg: #1e293b;
-      --text-light: #f8fafc;
-      --text-muted: #94a3b8;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: #0b1120;
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid #1e293b;
-    }
-
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: var(--primary-color);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      color: var(--text-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--primary-color);
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: #ffffff;
-    }
-
-    .hero p {
-      font-size: 1.125rem;
-      color: var(--text-muted);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 8px;
-      padding: 1.5rem;
-      border: 1px solid #334155;
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card h3 {
-      color: var(--primary-color);
-      margin-bottom: 0.75rem;
-    }
-
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-muted);
-      border-top: 1px solid #1e293b;
-      margin-top: 4rem;
-    }
+    :root { --primary: #0066cc; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    nav { background: #0b1120; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; flex-wrap: wrap; gap: 1rem; }
+    .logo { font-size: 1.2rem; font-weight: bold; color: #38bdf8; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .nav-links a { color: var(--text); text-decoration: none; font-size: 0.95rem; transition: 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #38bdf8; }
+    .hero { text-align: center; padding: 4.5rem 5% 3rem; max-width: 900px; margin: 0 auto; }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .hero p { color: var(--muted); font-size: 1.1rem; }
+    .cta-group { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn { background: var(--primary); color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.2s; }
+    .btn:hover { background: #0052a3; }
+    .btn-outline { background: transparent; border: 1px solid #38bdf8; color: #38bdf8; }
+    .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 2rem auto 4rem; padding: 0 5%; }
+    .card { background: var(--card); border: 1px solid #334155; border-radius: 10px; padding: 1.8rem; transition: 0.2s; display: block; text-decoration: none; color: inherit; }
+    .card:hover { border-color: var(--primary); transform: translateY(-3px); }
+    .card h3 { color: #38bdf8; margin-bottom: 0.8rem; font-size: 1.15rem; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e293b; color: var(--muted); font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="index.html" class="logo">🤖 OpenHands Agent Guide</a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">首頁</a></li>
-        <li><a href="guide.html">環境建置</a></li>
-        <li><a href="architecture.html">架構解析</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <h1>歡迎來到 OpenHands Agent 學習指南</h1>
-      <p>本專案旨在提供清晰、結構化的技術導向手冊，協助開發者快速掌握 OpenHands Agent 的建置與架構細節。</p>
-    </section>
-
-    <div class="grid">
-      <a href="AGENTS.md" style="text-decoration: none; color: inherit;">
-        <div class="card">
-          <h3>📖 開發規範 (AGENTS.md)</h3>
-          <p>約束 AI Agent 與開發者的專案檔案結構、程式碼風格及設計規範。</p>
-        </div>
-      </a>
-      <a href="guide.html" style="text-decoration: none; color: inherit;">
-        <div class="card">
-          <h3>🚀 環境建置指南 (guide.html)</h3>
-          <p>包含完整 OpenHands Docker 環境與指令調用設置步驟。</p>
-        </div>
-      </a>
-      <a href="architecture.html" style="text-decoration: none; color: inherit;">
-        <div class="card">
-          <h3>🧩 架構與工具調用 (architecture.html)</h3>
-          <p>深入拆解 Agent 運作機制與 HW8 自訂工具鏈架構。</p>
-        </div>
-      </a>
+  <nav>
+    <a href="index.html" class="logo">🤖 OpenHands Agent Guide</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">首頁</a>
+      <a href="slides.html">🎯 教學簡報</a>
+      <a href="guide.html">環境建置</a>
+      <a href="architecture.html">架構解析</a>
     </div>
-  </main>
+  </nav>
+
+  <section class="hero">
+    <h1>歡迎來到 OpenHands Agent 學習指南</h1>
+    <p>結合結構化 LLM Wiki 知識庫與自動化 Agent Graph 工作流，協助開發者快速掌握 AI Agent 的建置與核心原理。</p>
+    <div class="cta-group">
+      <a href="slides.html" class="btn">▶ 開啟教學型 HTML 簡報</a>
+      <a href="https://github.com/kawahi/openhands-agent-guide/tree/main/wiki" target="_blank" class="btn btn-outline">📚 瀏覽 LLM Wiki 知識庫</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <a href="slides.html" class="card">
+      <h3>🎯 互動教學簡報 (slides.html)</h3>
+      <p>由 Agent Graph 讀取 5 篇 Wiki 自動編製，支援鍵盤左右鍵切換的初學者教學簡報。</p>
+    </a>
+    <a href="https://github.com/kawahi/openhands-agent-guide/tree/main/wiki" target="_blank" class="card">
+      <h3>📚 LLM Wiki 知識庫 (wiki/)</h3>
+      <p>收錄 5 篇核心知識文件，涵蓋 Agent 定義、四大組件、Loop/Graph 設計與 MCP 協定。</p>
+    </a>
+    <a href="guide.html" class="card">
+      <h3>🚀 環境建置指南 (guide.html)</h3>
+      <p>包含完整 OpenHands Docker 環境與指令調用設置步驟。</p>
+    </a>
+    <a href="architecture.html" class="card">
+      <h3>🧩 架構與工具調用 (architecture.html)</h3>
+      <p>深入拆解 Agent 運作機制與自訂工具鏈架構。</p>
+    </a>
+  </div>
 
   <footer>
-    <p>&copy; 2026 OpenHands Agent Guide | Open Source Documentation</p>
+    © 2026 OpenHands Agent Guide | Powered by LLM Wiki & Agent Graph
   </footer>
 </body>
 </html>
