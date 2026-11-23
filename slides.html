@@ -5,170 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Agents 與開發者工作流 - 教學簡報</title>
   <style>
-    :root { --primary: #0066cc; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8; }
+    :root { --p: #0066cc; --bg: #0f172a; --c: #1e293b; --t: #f8fafc; --m: #94a3b8; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-    .progress-bar { height: 5px; background: #1e293b; width: 100%; }
-    .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
-    header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; }
-    header a { color: var(--muted); text-decoration: none; font-size: 0.95rem; border: 1px solid #334155; padding: 0.4rem 0.9rem; border-radius: 6px; }
-    header a:hover { color: var(--text); border-color: var(--primary); }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--t); height: 100vh; display: flex; flex-direction: column; }
+    .bar { height: 5px; background: var(--c); }
+    .fill { height: 100%; background: var(--p); width: 0%; transition: .3s; }
+    header, footer { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--c); }
+    footer { border-top: 1px solid var(--c); border-bottom: none; justify-content: center; gap: 1.5rem; }
+    header a { color: var(--m); text-decoration: none; border: 1px solid #334155; padding: .4rem .9rem; border-radius: 6px; }
+    header a:hover { color: var(--t); border-color: var(--p); }
     main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-    .slide { display: none; max-width: 900px; width: 100%; background: var(--card); border: 1px solid #334155; border-radius: 12px; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: fadeIn 0.3s ease; }
+    .slide { display: none; max-width: 860px; width: 100%; background: var(--c); border: 1px solid #334155; border-radius: 12px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
     .slide.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .tag { display: inline-block; background: rgba(0,102,204,0.2); color: #60a5fa; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; margin-bottom: 1rem; }
-    h1 { font-size: 2.2rem; margin-bottom: 1.2rem; color: #ffffff; line-height: 1.3; }
-    .summary { font-size: 1.15rem; color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.7; }
+    .tag { background: rgba(0,102,204,.2); color: #60a5fa; padding: .3rem .8rem; border-radius: 20px; font-size: .85rem; }
+    h1 { font-size: 2rem; margin: 1rem 0; color: #fff; }
+    .sum { color: #cbd5e1; margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.6; }
     ul { list-style: none; margin-bottom: 2rem; }
-    li { font-size: 1.08rem; color: var(--text); padding: 0.6rem 0 0.6rem 1.6rem; position: relative; line-height: 1.6; }
-    li::before { content: "▸"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
-    .source-box { border-top: 1px solid #334155; padding-top: 1rem; font-size: 0.9rem; color: var(--muted); display: flex; justify-content: space-between; }
-    footer { padding: 1.2rem 2rem; background: #0b1120; border-top: 1px solid #1e293b; display: flex; justify-content: center; align-items: center; gap: 1.5rem; }
-    button { background: var(--card); color: var(--text); border: 1px solid #334155; padding: 0.6rem 1.4rem; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: 0.2s; }
-    button:hover:not(:disabled) { background: var(--primary); border-color: var(--primary); }
-    button:disabled { opacity: 0.4; cursor: not-allowed; }
-    #page-indicator { font-size: 1rem; color: var(--muted); min-width: 80px; text-align: center; }
+    li { padding: .5rem 0 .5rem 1.5rem; position: relative; font-size: 1.05rem; line-height: 1.6; }
+    li::before { content: "▸"; color: var(--p); position: absolute; left: 0; font-weight: bold; }
+    .src { border-top: 1px solid #334155; padding-top: 1rem; font-size: .9rem; color: var(--m); display: flex; justify-content: space-between; }
+    button { background: var(--c); color: var(--t); border: 1px solid #334155; padding: .6rem 1.4rem; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+    button:hover:not(:disabled) { background: var(--p); border-color: var(--p); }
+    button:disabled { opacity: .4; cursor: not-allowed; }
   </style>
 </head>
 <body>
-  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-  <header>
-    <div style="font-weight:bold; color:#0066cc;">🤖 LLM Wiki 教學簡報</div>
-    <a href="index.html">← 返回網站首頁</a>
-  </header>
-  <main id="slides-container"></main>
+  <div class="bar"><div class="fill" id="p"></div></div>
+  <header><b style="color:#38bdf8">🤖 LLM Wiki 教學簡報</b><a href="index.html">← 返回網站首頁</a></header>
+  <main id="box"></main>
   <footer>
-    <button id="prev-btn" onclick="changeSlide(-1)">← 上一頁</button>
-    <span id="page-indicator">1 / 1</span>
-    <button id="next-btn" onclick="changeSlide(1)">下一頁 →</button>
+    <button id="prev" onclick="go(-1)">← 上一頁</button>
+    <span id="ind">1 / 8</span>
+    <button id="next" onclick="go(1)">下一頁 →</button>
   </footer>
   <script>
-    const slidesData = [
-  {
-    "tag": "課程導論 / 封面",
-    "title": "AI Agents 與開發者工作流入門",
-    "summary": "帶你從零認識什麼是 AI Agent、核心四大組件，以及如何透過 Loop/Graph 打造自動化開發助手。",
-    "bullets": [
-      "知識庫來源：嚴格依據本地 LLM Wiki（01 至 05 篇）編製",
-      "學習目標：理解從「被動聊天」到「自主執行任務」的架構演進",
-      "實戰應用：結合 MCP 工具協定與 OpenHands 沙盒工作流"
-    ],
-    "source": "01-what-is-ai-agent.md ~ 05-hands-on-openhands.md"
-  },
-  {
-    "tag": "學習地圖",
-    "title": "本簡報五大核心學習單元",
-    "summary": "我們將循序漸進拆解 AI Agent 的運作原理與工程實踐：",
-    "bullets": [
-      "單元 1：AI Agent 定義與傳統 ChatGPT 的本質差異",
-      "單元 2：大腦、規劃、記憶與工具調用四大核心組件",
-      "單元 3：ReAct 迴圈與 Graph 狀態圖的品質檢查設計",
-      "單元 4 & 5：MCP 通用協定與 OpenHands 沙盒開發實戰"
-    ],
-    "source": "01-what-is-ai-agent.md"
-  },
-  {
-    "tag": "單元 1 / 基礎概念",
-    "title": "﻿# 01. 什麼是 AI Agent？與傳統 ChatGPT 的差別",
-    "summary": "本節內容直接萃取自知識庫文件 01-what-is-ai-agent.md，幫助初學者掌握關鍵概念。",
-    "bullets": [
-      "AI Agent（人工智慧代理人） 是一個能夠自主感知環境、進行推理規劃，並調用外部工具來完成特定目標的軟體系統。",
-      "感知（Perception）：接收使用者指令、讀取本地檔案或系統報錯訊息。",
-      "大腦（Brain / LLM）：分析現況、拆解步驟並決定下一步該做什麼。",
-      "行動（Action）：實際呼叫工具（如終端機、API）改變外部環境狀態。"
-    ],
-    "source": "01-what-is-ai-agent.md"
-  },
-  {
-    "tag": "單元 2 / 系統架構",
-    "title": "﻿# 02. AI Agent 的四大核心組件",
-    "summary": "本節內容直接萃取自知識庫文件 02-core-architecture.md，幫助初學者掌握關鍵概念。",
-    "bullets": [
-      "子目標拆解：將「建立網站」拆分為「設計架構 → 撰寫 HTML → 測試版面 → 部署」。",
-      "自我反思（Self-Reflection）：評估上一步的產出是否符合預期，決定重做或前進。",
-      "短期記憶（Short-term Memory）：當下任務的對話歷史與執行軌跡（Context Window）。",
-      "長期記憶（Long-term Memory）：透過外部檔案（如 AGENTS.md、LLM Wiki 或向量資料庫）保存的跨任務知識與規範。"
-    ],
-    "source": "02-core-architecture.md"
-  },
-  {
-    "tag": "單元 3 / 運作機制",
-    "title": "﻿# 03. 運作機制：Loop 與 Graph 工作流設計",
-    "summary": "本節內容直接萃取自知識庫文件 03-agent-workflows-and-loops.md，幫助初學者掌握關鍵概念。",
-    "bullets": [
-      "Thought（思考）：分析目前進度與缺失。",
-      "Action（行動）：決定呼叫某個工具或生成草稿。",
-      "Observation（觀察）：取得工具回傳結果或檢查器（Validator）的評估。",
-      "Loop 判斷：若未達標則回到 Thought 修正；若通過則進入下一階段。"
-    ],
-    "source": "03-agent-workflows-and-loops.md"
-  },
-  {
-    "tag": "單元 4 / 工具協定",
-    "title": "﻿# 04. Agent 如何操作外部世界：Tools 與 MCP 協定",
-    "summary": "本節內容直接萃取自知識庫文件 04-mcp-and-tool-use.md，幫助初學者掌握關鍵概念。",
-    "bullets": [
-      "MCP Server：將本地檔案系統、Git 或資料庫包裝成標準介面。",
-      "MCP Client：Agent 主程式只要支援 MCP，就能即插即用各種工具，大幅降低開發複雜度。"
-    ],
-    "source": "04-mcp-and-tool-use.md"
-  },
-  {
-    "tag": "單元 5 / 實戰案例",
-    "title": "﻿# 05. 實戰案例：以 OpenHands 與規範檔打造工作流",
-    "summary": "本節內容直接萃取自知識庫文件 05-hands-on-openhands.md，幫助初學者掌握關鍵概念。",
-    "bullets": [
-      "統一架構與設計：強制規定配色（如主色 #0066cc、背景 #0f172a）與目錄結構。",
-      "降低溝通成本：每次啟動新任務時，Agent 會優先讀取規範檔，避免每次都要重複下達相同限制。",
-      "可追蹤與可驗證：所有產出皆有明確標準可供自動化檢查節點比對。"
-    ],
-    "source": "05-hands-on-openhands.md"
-  },
-  {
-    "tag": "課程總結",
-    "title": "總結：打造可靠 AI Agent 的關鍵原則",
-    "summary": "要讓 AI Agent 成為可靠的開發夥伴，不能只靠單次提示詞，而需要完整的工程架構：",
-    "bullets": [
-      "建立結構化知識庫（LLM Wiki）與最高指導原則（AGENTS.md）",
-      "設計帶有檢查節點（Verify）與條件迴圈的 Graph 工作流",
-      "透過 MCP 統一工具介面並在 Docker 沙盒中安全執行"
-    ],
-    "source": "03-agent-workflows-and-loops.md, 05-hands-on-openhands.md"
-  }
-];
-    const container = document.getElementById('slides-container');
-    slidesData.forEach((s, idx) => {
-      const bulletsHtml = s.bullets.map(b => <li></li>).join('');
-      container.innerHTML += 
-        <div class="slide " id="slide-">
-          <span class="tag"></span>
-          <h1></h1>
-          <p class="summary"></p>
-          <ul></ul>
-          <div class="source-box">
-            <span>📚 資料來源：</span>
-            <span>使用鍵盤 ← / → 鍵切換</span>
-          </div>
-        </div>;
+    const D = [
+      {
+        tag: "課程導論 / 封面",
+        title: "AI Agents 與開發者工作流入門",
+        summary: "帶你從零認識什麼是 AI Agent、核心四大組件，以及如何透過 Loop/Graph 打造自動化開發助手。",
+        bullets: [
+          "知識庫來源：嚴格依據本地 LLM Wiki（01 至 05 篇）編製",
+          "學習目標：理解從「被動聊天」到「自主執行任務」的架構演進",
+          "實戰應用：結合 MCP 工具協定與 OpenHands 沙盒工作流"
+        ],
+        source: "01-what-is-ai-agent.md ~ 05-hands-on-openhands.md"
+      },
+      {
+        tag: "學習地圖",
+        title: "本簡報五大核心學習單元",
+        summary: "我們將循序漸進拆解 AI Agent 的運作原理與工程實踐：",
+        bullets: [
+          "單元 1：AI Agent 定義與傳統 ChatGPT 的本質差異",
+          "單元 2：大腦、規劃、記憶與工具調用四大核心組件",
+          "單元 3：ReAct 迴圈與 Graph 狀態圖的品質檢查設計",
+          "單元 4 & 5：MCP 通用協定與 OpenHands 沙盒開發實戰"
+        ],
+        source: "01-what-is-ai-agent.md"
+      },
+      {
+        tag: "單元 1 / 基礎概念",
+        title: "01. 什麼是 AI Agent？與傳統 ChatGPT 的差別",
+        summary: "AI Agent 是一個能夠自主感知環境、進行推理規劃，並調用外部工具完成目標的系統。",
+        bullets: [
+          "互動模式：從被動「一問一答」演進為主動「目標導向」持續執行",
+          "執行能力：可直接讀寫檔案、執行終端機指令，而不只是輸出文字",
+          "運作三部曲：感知（Perception）→ 大腦（Brain）→ 行動（Action）"
+        ],
+        source: "01-what-is-ai-agent.md"
+      },
+      {
+        tag: "單元 2 / 系統架構",
+        title: "02. AI Agent 的四大核心組件",
+        summary: "一個完整的 AI Agent 系統由 LLM 大腦與三個關鍵外部模組協同構成：",
+        bullets: [
+          "大腦（LLM Core）：負責語意理解、邏輯推理與指令生成",
+          "規劃模組（Planning）：將複雜任務拆解為子目標並進行自我反思",
+          "記憶模組（Memory）：結合對話短期記憶與 Wiki/AGENTS.md 長期記憶",
+          "工具調用（Tool Use）：賦予操作終端機、檔案編輯器與 API 的雙手"
+        ],
+        source: "02-core-architecture.md"
+      },
+      {
+        tag: "單元 3 / 運作機制",
+        title: "03. 運作機制：Loop 與 Graph 工作流設計",
+        summary: "透過迴圈（Loop）與有向狀態圖（Graph）確保輸出品質並消除幻覺：",
+        bullets: [
+          "ReAct 經典迴圈：Thought（思考）→ Action（行動）→ Observation（觀察）",
+          "節點分工（Nodes）：將檢索、草擬、事實核對拆分為獨立職責節點",
+          "條件邊（Conditional Edges）：審查未達標時自動退回重做，直到通過為止"
+        ],
+        source: "03-agent-workflows-and-loops.md"
+      },
+      {
+        tag: "單元 4 / 工具協定",
+        title: "04. Agent 如何操作外部世界：Tools 與 MCP 協定",
+        summary: "透過標準化介面連接本機系統與外部服務，讓 Agent 具備通用擴充能力：",
+        bullets: [
+          "Function Calling：LLM 輸出結構化參數請求，由外層程式代為執行工具",
+          "MCP 通用協定：如同 AI 界的 USB-C 標準，統一連接資料庫與開發工具",
+          "Server / Client 架構：任何支援 MCP 的 Agent 都能即插即用外部工具"
+        ],
+        source: "04-mcp-and-tool-use.md"
+      },
+      {
+        tag: "單元 5 / 實戰案例",
+        title: "05. 實戰案例：以 OpenHands 與規範檔打造工作流",
+        summary: "結合沙盒隔離環境與專案規範檔，打造安全且風格一致的自動化開發流程：",
+        bullets: [
+          "Docker 沙盒隔離：讓 Agent 在安全容器內測試程式碼，避免誤刪本機檔案",
+          "AGENTS.md 規範檔：統一設定深色科技風配色與目錄架構，減少重複溝通",
+          "可追蹤與可驗證：所有產出皆有明確標準可供自動化檢查節點比對"
+        ],
+        source: "05-hands-on-openhands.md"
+      },
+      {
+        tag: "課程總結",
+        title: "總結：打造可靠 AI Agent 的關鍵原則",
+        summary: "要讓 AI Agent 成為可靠的開發夥伴，需要完整的工程架構：",
+        bullets: [
+          "建立結構化知識庫（LLM Wiki）與最高指導原則（AGENTS.md）",
+          "設計帶有檢查節點（Verify）與條件迴圈的 Graph 工作流",
+          "透過 MCP 統一工具介面並在 Docker 沙盒中安全執行"
+        ],
+        source: "03-agent-workflows-and-loops.md, 05-hands-on-openhands.md"
+      }
+    ];
+
+    const box = document.getElementById('box');
+    D.forEach((s, i) => {
+      box.innerHTML +=
+        '<div class="slide' + (i === 0 ? ' active' : '') + '" id="s' + i + '">' +
+          '<span class="tag">' + s.tag + '</span>' +
+          '<h1>' + s.title + '</h1>' +
+          '<p class="sum">' + s.summary + '</p>' +
+          '<ul>' + s.bullets.map(b => '<li>' + b + '</li>').join('') + '</ul>' +
+          '<div class="src"><span>📚 資料來源：' + s.source + '</span><span>鍵盤 ← / → 鍵切換</span></div>' +
+        '</div>';
     });
-    let current = 0;
-    function updateUI() {
-      document.querySelectorAll('.slide').forEach((el, i) => el.classList.toggle('active', i === current));
-      document.getElementById('page-indicator').innerText = ${current + 1} / ;
-      document.getElementById('prev-btn').disabled = current === 0;
-      document.getElementById('next-btn').disabled = current === slidesData.length - 1;
-      document.getElementById('progress').style.width = ${((current + 1) / slidesData.length) * 100}%;
+
+    let c = 0;
+    function up() {
+      document.querySelectorAll('.slide').forEach((e, i) => e.classList.toggle('active', i === c));
+      document.getElementById('ind').innerText = (c + 1) + ' / ' + D.length;
+      document.getElementById('prev').disabled = c === 0;
+      document.getElementById('next').disabled = c === D.length - 1;
+      document.getElementById('p').style.width = (((c + 1) / D.length) * 100) + '%';
     }
-    function changeSlide(dir) {
-      const next = current + dir;
-      if (next >= 0 && next < slidesData.length) { current = next; updateUI(); }
+    function go(d) {
+      if (c + d >= 0 && c + d < D.length) { c += d; up(); }
     }
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') changeSlide(1);
-      if (e.key === 'ArrowLeft') changeSlide(-1);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'ArrowLeft') go(-1);
     });
-    updateUI();
+    up();
   </script>
 </body>
 </html>
